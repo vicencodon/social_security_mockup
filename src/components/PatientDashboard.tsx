@@ -112,7 +112,7 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
               <p className="text-sm text-gray-600">Ver historial completo</p>
             </div>
           </div>
-        </div>
+        </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
