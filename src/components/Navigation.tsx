@@ -1,5 +1,7 @@
 import React from 'react'
 import { Home, Calendar, Video, FileText, Settings, LogOut, Users } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
+import LanguageSelector from './LanguageSelector'
 
 interface NavigationProps {
   userRole: 'patient' | 'admin'
@@ -9,15 +11,17 @@ interface NavigationProps {
 }
 
 const Navigation: React.FC<NavigationProps> = ({ userRole, currentView, onNavigate, onLogout }) => {
+  const { t } = useLanguage()
+
   const patientNavItems = [
-    { id: 'dashboard', label: 'Inicio', icon: Home },
-    { id: 'booking', label: 'Citas', icon: Calendar },
-    { id: 'telemedicine', label: 'Teleconsulta', icon: Video },
-    { id: 'history', label: 'Historial', icon: FileText },
+    { id: 'dashboard', label: t('dashboard.welcome'), icon: Home },
+    { id: 'booking', label: t('dashboard.myAppointments'), icon: Calendar },
+    { id: 'telemedicine', label: t('dashboard.telemedicine'), icon: Video },
+    { id: 'history', label: t('dashboard.medicalHistory'), icon: FileText },
   ]
 
   const adminNavItems = [
-    { id: 'admin', label: 'Panel Admin', icon: Users },
+    { id: 'admin', label: t('admin.title'), icon: Users },
     { id: 'dashboard', label: 'Dashboard', icon: Home },
     { id: 'settings', label: 'Configuración', icon: Settings },
   ]
@@ -34,7 +38,7 @@ const Navigation: React.FC<NavigationProps> = ({ userRole, currentView, onNaviga
                 <span className="text-white font-bold text-sm">SNS</span>
               </div>
               <span className="ml-2 text-xl font-semibold text-gray-900">
-                Sistema Nacional de Salud
+                {t('login.title')}
               </span>
             </div>
             
@@ -59,13 +63,16 @@ const Navigation: React.FC<NavigationProps> = ({ userRole, currentView, onNaviga
             </div>
           </div>
 
-          <button
-            onClick={onLogout}
-            className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
-          >
-            <LogOut className="w-4 h-4 mr-2" />
-            Cerrar Sesión
-          </button>
+          <div className="flex items-center space-x-4">
+            <LanguageSelector />
+            <button
+              onClick={onLogout}
+              className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              {t('common.logout')}
+            </button>
+          </div>
         </div>
       </div>
     </nav>

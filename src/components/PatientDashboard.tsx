@@ -1,15 +1,18 @@
 import React from 'react'
 import { Calendar, Video, FileText, Bell, Clock, MapPin, User } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
 
 interface PatientDashboardProps {
   onNavigate: (view: string) => void
 }
 
 const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
+  const { t } = useLanguage()
+
   const upcomingAppointments = [
     {
       id: 1,
-      specialty: 'Medicina General',
+      specialty: t('booking.specialties.general'),
       doctor: 'Dr. García López',
       date: '2025-01-15',
       time: '10:30',
@@ -17,7 +20,7 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
     },
     {
       id: 2,
-      specialty: 'Cardiología',
+      specialty: t('booking.specialties.cardiology'),
       doctor: 'Dra. Martínez Ruiz',
       date: '2025-01-20',
       time: '16:00',
@@ -29,13 +32,13 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
     {
       id: 1,
       type: 'reminder',
-      message: 'Recordatorio: Cita con Dr. García López mañana a las 10:30',
+      message: t('dashboard.reminderAppointment').replace('{doctor}', 'Dr. García López').replace('{time}', '10:30'),
       time: '2 horas'
     },
     {
       id: 2,
       type: 'result',
-      message: 'Resultados de análisis disponibles',
+      message: t('dashboard.resultsAvailable'),
       time: '1 día'
     }
   ]
@@ -45,10 +48,10 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
       {/* Welcome Section */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Bienvenido, María González
+          {t('dashboard.welcome')}, María González
         </h1>
         <p className="text-gray-600">
-          Tarjeta Sanitaria: 12345678A
+          {t('dashboard.healthCard')}: 12345678A
         </p>
       </div>
 
@@ -63,8 +66,8 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
               <Calendar className="w-6 h-6 text-primary-600" />
             </div>
             <div className="ml-4">
-              <h3 className="font-semibold text-gray-900">Pedir Cita</h3>
-              <p className="text-sm text-gray-600">Reservar nueva cita</p>
+              <h3 className="font-semibold text-gray-900">{t('dashboard.bookAppointment')}</h3>
+              <p className="text-sm text-gray-600">{t('dashboard.bookAppointmentDesc')}</p>
             </div>
           </div>
         </button>
@@ -78,8 +81,8 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
               <Clock className="w-6 h-6 text-green-600" />
             </div>
             <div className="ml-4">
-              <h3 className="font-semibold text-gray-900">Mis Citas</h3>
-              <p className="text-sm text-gray-600">Ver citas programadas</p>
+              <h3 className="font-semibold text-gray-900">{t('dashboard.myAppointments')}</h3>
+              <p className="text-sm text-gray-600">{t('dashboard.myAppointmentsDesc')}</p>
             </div>
           </div>
         </button>
@@ -93,8 +96,8 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
               <Video className="w-6 h-6 text-purple-600" />
             </div>
             <div className="ml-4">
-              <h3 className="font-semibold text-gray-900">Teleconsulta</h3>
-              <p className="text-sm text-gray-600">Consulta virtual</p>
+              <h3 className="font-semibold text-gray-900">{t('dashboard.telemedicine')}</h3>
+              <p className="text-sm text-gray-600">{t('dashboard.telemedicineDesc')}</p>
             </div>
           </div>
         </button>
@@ -108,8 +111,8 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
               <FileText className="w-6 h-6 text-orange-600" />
             </div>
             <div className="ml-4">
-              <h3 className="font-semibold text-gray-900">Historial Médico</h3>
-              <p className="text-sm text-gray-600">Ver historial completo</p>
+              <h3 className="font-semibold text-gray-900">{t('dashboard.medicalHistory')}</h3>
+              <p className="text-sm text-gray-600">{t('dashboard.medicalHistoryDesc')}</p>
             </div>
           </div>
         </button>
@@ -120,12 +123,12 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
         <div className="lg:col-span-2">
           <div className="card">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-gray-900">Próximas Citas</h2>
+              <h2 className="text-xl font-semibold text-gray-900">{t('dashboard.upcomingAppointments')}</h2>
               <button
                 onClick={() => onNavigate('appointments')}
                 className="text-primary-600 hover:text-primary-700 text-sm font-medium"
               >
-                Ver todas
+                {t('dashboard.viewAll')}
               </button>
             </div>
             
@@ -147,8 +150,8 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
                       </div>
                     </div>
                     <div className="flex space-x-2">
-                      <button className="btn-secondary text-xs">Modificar</button>
-                      <button className="text-red-600 hover:text-red-700 text-xs font-medium">Cancelar</button>
+                      <button className="btn-secondary text-xs">{t('dashboard.modify')}</button>
+                      <button className="text-red-600 hover:text-red-700 text-xs font-medium">{t('common.cancel')}</button>
                     </div>
                   </div>
                 </div>
@@ -162,7 +165,7 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
           <div className="card">
             <div className="flex items-center mb-6">
               <Bell className="w-5 h-5 text-gray-500 mr-2" />
-              <h2 className="text-xl font-semibold text-gray-900">Notificaciones</h2>
+              <h2 className="text-xl font-semibold text-gray-900">{t('dashboard.notifications')}</h2>
             </div>
             
             <div className="space-y-4">
@@ -175,7 +178,7 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
             </div>
 
             <button className="w-full mt-4 text-primary-600 hover:text-primary-700 text-sm font-medium">
-              Ver todas las notificaciones
+              {t('dashboard.viewAllNotifications')}
             </button>
           </div>
         </div>

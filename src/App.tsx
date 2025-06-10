@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
+import { LanguageProvider } from './contexts/LanguageContext'
 import LoginScreen from './components/LoginScreen'
 import PatientDashboard from './components/PatientDashboard'
 import AppointmentBooking from './components/AppointmentBooking'
@@ -41,19 +42,21 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-medical-light">
-      {isAuthenticated && (
-        <Navigation 
-          userRole={userRole} 
-          currentView={currentView}
-          onNavigate={setCurrentView}
-          onLogout={handleLogout}
-        />
-      )}
-      <main className={isAuthenticated ? 'pt-16' : ''}>
-        {renderCurrentView()}
-      </main>
-    </div>
+    <LanguageProvider>
+      <div className="min-h-screen bg-medical-light">
+        {isAuthenticated && (
+          <Navigation 
+            userRole={userRole} 
+            currentView={currentView}
+            onNavigate={setCurrentView}
+            onLogout={handleLogout}
+          />
+        )}
+        <main className={isAuthenticated ? 'pt-16' : ''}>
+          {renderCurrentView()}
+        </main>
+      </div>
+    </LanguageProvider>
   )
 }
 

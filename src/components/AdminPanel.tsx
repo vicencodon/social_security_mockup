@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Users, Calendar, TrendingUp, AlertTriangle, Clock, CheckCircle, XCircle, Edit, Trash2, Filter } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
 
 interface AdminPanelProps {
   onNavigate: (view: string) => void
@@ -9,13 +10,14 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
   const [selectedFilter, setSelectedFilter] = useState('all')
   const [showEditModal, setShowEditModal] = useState(false)
   const [selectedPatient, setSelectedPatient] = useState<any>(null)
+  const { t } = useLanguage()
 
   const waitingList = [
     {
       id: 1,
       patientName: 'María García López',
       healthId: '12345678A',
-      specialty: 'Cardiología',
+      specialty: t('booking.specialties.cardiology'),
       urgency: 'high',
       urgencyScore: 85,
       requestDate: '2025-01-10',
@@ -26,7 +28,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
       id: 2,
       patientName: 'Juan Martínez Ruiz',
       healthId: '87654321B',
-      specialty: 'Traumatología',
+      specialty: t('booking.specialties.traumatology'),
       urgency: 'medium',
       urgencyScore: 65,
       requestDate: '2025-01-12',
@@ -37,7 +39,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
       id: 3,
       patientName: 'Ana Rodríguez Sánchez',
       healthId: '11223344C',
-      specialty: 'Dermatología',
+      specialty: t('booking.specialties.dermatology'),
       urgency: 'low',
       urgencyScore: 35,
       requestDate: '2025-01-14',
@@ -48,7 +50,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
       id: 4,
       patientName: 'Carlos López Fernández',
       healthId: '55667788D',
-      specialty: 'Cardiología',
+      specialty: t('booking.specialties.cardiology'),
       urgency: 'high',
       urgencyScore: 92,
       requestDate: '2025-01-13',
@@ -59,28 +61,28 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
 
   const kpis = [
     {
-      title: 'Pacientes en Lista de Espera',
+      title: t('admin.waitingListPatients'),
       value: '1,247',
       change: '+5.2%',
       trend: 'up',
       icon: Users
     },
     {
-      title: 'Tiempo Medio de Espera',
+      title: t('admin.averageWaitTime'),
       value: '12 días',
       change: '-2.1%',
       trend: 'down',
       icon: Clock
     },
     {
-      title: 'Tasa de No Presentación',
+      title: t('admin.noShowRate'),
       value: '8.3%',
       change: '+1.2%',
       trend: 'up',
       icon: XCircle
     },
     {
-      title: 'Citas Completadas Hoy',
+      title: t('admin.completedToday'),
       value: '156',
       change: '+12.5%',
       trend: 'up',
@@ -99,9 +101,9 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
 
   const getUrgencyLabel = (urgency: string) => {
     switch (urgency) {
-      case 'high': return 'Alta'
-      case 'medium': return 'Media'
-      case 'low': return 'Baja'
+      case 'high': return t('admin.high')
+      case 'medium': return t('admin.medium')
+      case 'low': return t('admin.low')
       default: return 'Normal'
     }
   }
@@ -112,7 +114,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
   })
 
   const handleAssignSlot = (patientId: number) => {
-    alert(`Asignando cita para paciente ID: ${patientId}. En una aplicación real, esto abriría un modal de selección de horarios.`)
+    alert(t('admin.assigningSlot'))
   }
 
   const handleEditPatient = (patient: any) => {
@@ -121,16 +123,16 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
   }
 
   const handleDeletePatient = (patientId: number) => {
-    if (confirm('¿Está seguro de que desea eliminar este paciente de la lista de espera?')) {
-      alert(`Paciente ID: ${patientId} eliminado de la lista de espera.`)
+    if (confirm(t('admin.confirmDelete'))) {
+      alert(t('admin.patientDeleted'))
     }
   }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Panel de Administración</h1>
-        <p className="text-gray-600">Gestión de listas de espera y rendimiento del sistema</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('admin.title')}</h1>
+        <p className="text-gray-600">{t('admin.subtitle')}</p>
       </div>
 
       {/* KPIs Dashboard */}
@@ -168,7 +170,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
             <AlertTriangle className="w-6 h-6 text-orange-500 mr-3" />
-            <h2 className="text-xl font-semibold text-gray-900">Lista de Espera Prioritaria</h2>
+            <h2 className="text-xl font-semibold text-gray-900">{t('admin.priorityWaitingList')}</h2>
           </div>
           
           <div className="flex items-center space-x-4">
@@ -179,10 +181,10 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
                 onChange={(e) => setSelectedFilter(e.target.value)}
                 className="input-field text-sm"
               >
-                <option value="all">Todas las urgencias</option>
-                <option value="high">Alta urgencia</option>
-                <option value="medium">Media urgencia</option>
-                <option value="low">Baja urgencia</option>
+                <option value="all">{t('admin.allUrgencies')}</option>
+                <option value="high">{t('admin.highUrgency')}</option>
+                <option value="medium">{t('admin.mediumUrgency')}</option>
+                <option value="low">{t('admin.lowUrgency')}</option>
               </select>
             </div>
           </div>
@@ -193,22 +195,22 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Paciente
+                  {t('admin.patient')}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Especialidad
+                  {t('admin.specialty')}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Urgencia
+                  {t('admin.urgency')}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Puntuación IA
+                  {t('admin.aiScore')}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Tiempo Estimado
+                  {t('admin.estimatedTime')}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Acciones
+                  {t('admin.actions')}
                 </th>
               </tr>
             </thead>
@@ -224,7 +226,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
                         {patient.healthId}
                       </div>
                       <div className="text-xs text-gray-400 mt-1">
-                        Solicitado: {patient.requestDate}
+                        {t('admin.requested')}: {patient.requestDate}
                       </div>
                     </div>
                   </td>
@@ -263,7 +265,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
                       onClick={() => handleAssignSlot(patient.id)}
                       className="bg-primary-500 hover:bg-primary-600 text-white px-3 py-1 rounded text-xs transition-colors"
                     >
-                      Asignar Cita
+                      {t('admin.assignAppointment')}
                     </button>
                     <button
                       onClick={() => handleEditPatient(patient)}
@@ -288,10 +290,10 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
           <div className="text-center py-8">
             <Users className="w-16 h-16 text-gray-300 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 mb-2">
-              No hay pacientes en esta categoría
+              {t('admin.noPatientsCategory')}
             </h3>
             <p className="text-gray-600">
-              Seleccione un filtro diferente para ver más pacientes
+              {t('admin.selectDifferentFilter')}
             </p>
           </div>
         )}
@@ -300,22 +302,22 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
       {/* Performance Metrics */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
         <div className="card">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Rendimiento por Especialidad</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('admin.performanceBySpecialty')}</h3>
           <div className="space-y-4">
             {[
-              { specialty: 'Cardiología', waiting: 45, avgWait: '8 días' },
-              { specialty: 'Traumatología', waiting: 32, avgWait: '12 días' },
-              { specialty: 'Dermatología', waiting: 28, avgWait: '18 días' },
-              { specialty: 'Ginecología', waiting: 22, avgWait: '15 días' }
+              { specialty: t('booking.specialties.cardiology'), waiting: 45, avgWait: '8 días' },
+              { specialty: t('booking.specialties.traumatology'), waiting: 32, avgWait: '12 días' },
+              { specialty: t('booking.specialties.dermatology'), waiting: 28, avgWait: '18 días' },
+              { specialty: t('booking.specialties.gynecology'), waiting: 22, avgWait: '15 días' }
             ].map((item, index) => (
               <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <div>
                   <p className="font-medium text-gray-900">{item.specialty}</p>
-                  <p className="text-sm text-gray-600">{item.waiting} pacientes en espera</p>
+                  <p className="text-sm text-gray-600">{item.waiting} {t('admin.patientsWaiting')}</p>
                 </div>
                 <div className="text-right">
                   <p className="text-sm font-medium text-gray-900">{item.avgWait}</p>
-                  <p className="text-xs text-gray-500">tiempo medio</p>
+                  <p className="text-xs text-gray-500">{t('admin.averageTime')}</p>
                 </div>
               </div>
             ))}
@@ -323,16 +325,16 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
         </div>
 
         <div className="card">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Alertas del Sistema</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('admin.systemAlerts')}</h3>
           <div className="space-y-3">
             <div className="flex items-start p-3 bg-red-50 border border-red-200 rounded-lg">
               <AlertTriangle className="w-5 h-5 text-red-500 mr-3 mt-0.5" />
               <div>
                 <p className="text-sm font-medium text-red-900">
-                  Lista de espera de Cardiología crítica
+                  {t('admin.criticalWaitingList')}
                 </p>
                 <p className="text-xs text-red-700 mt-1">
-                  15 pacientes con urgencia alta esperando más de 5 días
+                  15 {t('admin.criticalPatientsWaiting')}
                 </p>
               </div>
             </div>
@@ -341,10 +343,10 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
               <Clock className="w-5 h-5 text-yellow-500 mr-3 mt-0.5" />
               <div>
                 <p className="text-sm font-medium text-yellow-900">
-                  Aumento en tasa de no presentación
+                  {t('admin.noShowIncrease')}
                 </p>
                 <p className="text-xs text-yellow-700 mt-1">
-                  La tasa ha aumentado un 15% esta semana
+                  {t('admin.noShowIncreaseDesc')}
                 </p>
               </div>
             </div>
@@ -353,10 +355,10 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
               <CheckCircle className="w-5 h-5 text-green-500 mr-3 mt-0.5" />
               <div>
                 <p className="text-sm font-medium text-green-900">
-                  Objetivo de tiempo de espera cumplido
+                  {t('admin.waitTimeGoalMet')}
                 </p>
                 <p className="text-xs text-green-700 mt-1">
-                  Dermatología ha reducido el tiempo medio en 20%
+                  {t('admin.waitTimeReduction')}
                 </p>
               </div>
             </div>
@@ -369,26 +371,26 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Editar Paciente: {selectedPatient.patientName}
+              {t('admin.editPatient')}: {selectedPatient.patientName}
             </h3>
             
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Nivel de Urgencia
+                  {t('admin.urgencyLevel')}
                 </label>
                 <select className="input-field">
-                  <option value="high">Alta</option>
-                  <option value="medium">Media</option>
-                  <option value="low">Baja</option>
+                  <option value="high">{t('admin.high')}</option>
+                  <option value="medium">{t('admin.medium')}</option>
+                  <option value="low">{t('admin.low')}</option>
                 </select>
               </div>
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Notas Adicionales
+                  {t('admin.additionalNotes')}
                 </label>
-                <textarea className="input-field h-20 resize-none" placeholder="Agregar notas..."></textarea>
+                <textarea className="input-field h-20 resize-none" placeholder={t('admin.addNotes')}></textarea>
               </div>
             </div>
 
@@ -397,16 +399,16 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onNavigate }) => {
                 onClick={() => setShowEditModal(false)}
                 className="btn-secondary flex-1"
               >
-                Cancelar
+                {t('common.cancel')}
               </button>
               <button
                 onClick={() => {
                   setShowEditModal(false)
-                  alert('Cambios guardados correctamente')
+                  alert(t('admin.changesSaved'))
                 }}
                 className="btn-primary flex-1"
               >
-                Guardar Cambios
+                {t('admin.saveChanges')}
               </button>
             </div>
           </div>

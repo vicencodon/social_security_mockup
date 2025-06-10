@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Calendar, Clock, MapPin, User, Filter, Check } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
 
 interface AppointmentBookingProps {
   onNavigate: (view: string) => void
@@ -11,16 +12,17 @@ const AppointmentBooking: React.FC<AppointmentBookingProps> = ({ onNavigate }) =
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedTime, setSelectedTime] = useState('')
   const [showConfirmation, setShowConfirmation] = useState(false)
+  const { t } = useLanguage()
 
   const specialties = [
-    'Medicina General',
-    'Cardiología',
-    'Dermatología',
-    'Ginecología',
-    'Pediatría',
-    'Traumatología',
-    'Oftalmología',
-    'Neurología'
+    { key: 'general', label: t('booking.specialties.general') },
+    { key: 'cardiology', label: t('booking.specialties.cardiology') },
+    { key: 'dermatology', label: t('booking.specialties.dermatology') },
+    { key: 'gynecology', label: t('booking.specialties.gynecology') },
+    { key: 'pediatrics', label: t('booking.specialties.pediatrics') },
+    { key: 'traumatology', label: t('booking.specialties.traumatology') },
+    { key: 'ophthalmology', label: t('booking.specialties.ophthalmology') },
+    { key: 'neurology', label: t('booking.specialties.neurology') }
   ]
 
   const locations = [
@@ -37,10 +39,10 @@ const AppointmentBooking: React.FC<AppointmentBookingProps> = ({ onNavigate }) =
   ]
 
   const doctors = [
-    { name: 'Dr. García López', specialty: 'Medicina General' },
-    { name: 'Dra. Martínez Ruiz', specialty: 'Cardiología' },
-    { name: 'Dr. Rodríguez Sánchez', specialty: 'Dermatología' },
-    { name: 'Dra. López Fernández', specialty: 'Ginecología' }
+    { name: 'Dr. García López', specialty: 'general' },
+    { name: 'Dra. Martínez Ruiz', specialty: 'cardiology' },
+    { name: 'Dr. Rodríguez Sánchez', specialty: 'dermatology' },
+    { name: 'Dra. López Fernández', specialty: 'gynecology' }
   ]
 
   const handleBookAppointment = () => {
@@ -49,8 +51,7 @@ const AppointmentBooking: React.FC<AppointmentBookingProps> = ({ onNavigate }) =
 
   const handleConfirmBooking = () => {
     setShowConfirmation(false)
-    // Show success message and redirect
-    alert('Cita reservada con éxito. Recibirá confirmación por SMS y email.')
+    alert(t('booking.appointmentBooked'))
     onNavigate('dashboard')
   }
 
@@ -62,8 +63,8 @@ const AppointmentBooking: React.FC<AppointmentBookingProps> = ({ onNavigate }) =
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Check className="w-8 h-8 text-green-600" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Confirmar Cita</h2>
-            <p className="text-gray-600">Por favor, revise los detalles de su cita</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('booking.confirmAppointment')}</h2>
+            <p className="text-gray-600">{t('booking.reviewDetails')}</p>
           </div>
 
           <div className="space-y-4 mb-8">
@@ -79,7 +80,7 @@ const AppointmentBooking: React.FC<AppointmentBookingProps> = ({ onNavigate }) =
               <Calendar className="w-5 h-5 text-gray-500 mr-3" />
               <div>
                 <p className="font-medium text-gray-900">{selectedDate}</p>
-                <p className="text-sm text-gray-600">Fecha de la cita</p>
+                <p className="text-sm text-gray-600">{t('booking.appointmentDate')}</p>
               </div>
             </div>
 
@@ -87,7 +88,7 @@ const AppointmentBooking: React.FC<AppointmentBookingProps> = ({ onNavigate }) =
               <Clock className="w-5 h-5 text-gray-500 mr-3" />
               <div>
                 <p className="font-medium text-gray-900">{selectedTime}</p>
-                <p className="text-sm text-gray-600">Hora de la cita</p>
+                <p className="text-sm text-gray-600">{t('booking.appointmentTime')}</p>
               </div>
             </div>
 
@@ -95,7 +96,7 @@ const AppointmentBooking: React.FC<AppointmentBookingProps> = ({ onNavigate }) =
               <MapPin className="w-5 h-5 text-gray-500 mr-3" />
               <div>
                 <p className="font-medium text-gray-900">{selectedLocation}</p>
-                <p className="text-sm text-gray-600">Ubicación</p>
+                <p className="text-sm text-gray-600">{t('booking.appointmentLocation')}</p>
               </div>
             </div>
           </div>
@@ -105,13 +106,13 @@ const AppointmentBooking: React.FC<AppointmentBookingProps> = ({ onNavigate }) =
               onClick={() => setShowConfirmation(false)}
               className="btn-secondary flex-1"
             >
-              Modificar
+              {t('dashboard.modify')}
             </button>
             <button
               onClick={handleConfirmBooking}
               className="btn-primary flex-1"
             >
-              Confirmar Cita
+              {t('booking.confirmAppointment')}
             </button>
           </div>
         </div>
@@ -122,8 +123,8 @@ const AppointmentBooking: React.FC<AppointmentBookingProps> = ({ onNavigate }) =
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Reservar Cita</h1>
-        <p className="text-gray-600">Seleccione la especialidad, ubicación y horario preferido</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('booking.title')}</h1>
+        <p className="text-gray-600">{t('booking.subtitle')}</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -132,23 +133,23 @@ const AppointmentBooking: React.FC<AppointmentBookingProps> = ({ onNavigate }) =
           <div className="card sticky top-20">
             <div className="flex items-center mb-6">
               <Filter className="w-5 h-5 text-gray-500 mr-2" />
-              <h2 className="text-xl font-semibold text-gray-900">Filtros</h2>
+              <h2 className="text-xl font-semibold text-gray-900">{t('booking.filters')}</h2>
             </div>
 
             <div className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Especialidad
+                  {t('booking.specialty')}
                 </label>
                 <select
                   value={selectedSpecialty}
                   onChange={(e) => setSelectedSpecialty(e.target.value)}
                   className="input-field"
                 >
-                  <option value="">Seleccionar especialidad</option>
+                  <option value="">{t('booking.selectSpecialty')}</option>
                   {specialties.map((specialty) => (
-                    <option key={specialty} value={specialty}>
-                      {specialty}
+                    <option key={specialty.key} value={specialty.label}>
+                      {specialty.label}
                     </option>
                   ))}
                 </select>
@@ -156,14 +157,14 @@ const AppointmentBooking: React.FC<AppointmentBookingProps> = ({ onNavigate }) =
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Ubicación
+                  {t('booking.location')}
                 </label>
                 <select
                   value={selectedLocation}
                   onChange={(e) => setSelectedLocation(e.target.value)}
                   className="input-field"
                 >
-                  <option value="">Seleccionar ubicación</option>
+                  <option value="">{t('booking.selectLocation')}</option>
                   {locations.map((location) => (
                     <option key={location} value={location}>
                       {location}
@@ -174,7 +175,7 @@ const AppointmentBooking: React.FC<AppointmentBookingProps> = ({ onNavigate }) =
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Fecha
+                  {t('booking.date')}
                 </label>
                 <input
                   type="date"
@@ -191,7 +192,7 @@ const AppointmentBooking: React.FC<AppointmentBookingProps> = ({ onNavigate }) =
         {/* Available Slots */}
         <div className="lg:col-span-2">
           <div className="card">
-            <h2 className="text-xl font-semibold text-gray-900 mb-6">Horarios Disponibles</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-6">{t('booking.availableSlots')}</h2>
             
             {selectedSpecialty && selectedLocation && selectedDate ? (
               <div>
@@ -200,7 +201,7 @@ const AppointmentBooking: React.FC<AppointmentBookingProps> = ({ onNavigate }) =
                     {selectedSpecialty} - {selectedLocation}
                   </h3>
                   <p className="text-sm text-gray-600 mb-4">
-                    Fecha seleccionada: {selectedDate}
+                    {t('booking.selectedDate')}: {selectedDate}
                   </p>
                 </div>
 
@@ -222,10 +223,13 @@ const AppointmentBooking: React.FC<AppointmentBookingProps> = ({ onNavigate }) =
 
                 {selectedTime && (
                   <div className="border-t pt-6">
-                    <h3 className="font-medium text-gray-900 mb-4">Profesionales Disponibles</h3>
+                    <h3 className="font-medium text-gray-900 mb-4">{t('booking.availableProfessionals')}</h3>
                     <div className="space-y-3">
                       {doctors
-                        .filter(doctor => doctor.specialty === selectedSpecialty)
+                        .filter(doctor => {
+                          const selectedSpecialtyKey = specialties.find(s => s.label === selectedSpecialty)?.key
+                          return doctor.specialty === selectedSpecialtyKey
+                        })
                         .map((doctor, index) => (
                           <div key={index} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
                             <div className="flex items-center">
@@ -234,14 +238,14 @@ const AppointmentBooking: React.FC<AppointmentBookingProps> = ({ onNavigate }) =
                               </div>
                               <div>
                                 <p className="font-medium text-gray-900">{doctor.name}</p>
-                                <p className="text-sm text-gray-600">{doctor.specialty}</p>
+                                <p className="text-sm text-gray-600">{selectedSpecialty}</p>
                               </div>
                             </div>
                             <button
                               onClick={handleBookAppointment}
                               className="btn-primary"
                             >
-                              Seleccionar
+                              {t('booking.select')}
                             </button>
                           </div>
                         ))}
@@ -253,10 +257,10 @@ const AppointmentBooking: React.FC<AppointmentBookingProps> = ({ onNavigate }) =
               <div className="text-center py-12">
                 <Calendar className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  Seleccione los filtros
+                  {t('booking.selectFilters')}
                 </h3>
                 <p className="text-gray-600">
-                  Complete la especialidad, ubicación y fecha para ver los horarios disponibles
+                  {t('booking.completeFilters')}
                 </p>
               </div>
             )}

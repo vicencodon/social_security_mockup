@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { Eye, EyeOff, Globe } from 'lucide-react'
+import { Eye, EyeOff } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
+import LanguageSelector from './LanguageSelector'
 
 interface LoginScreenProps {
   onLogin: (role: 'patient' | 'admin') => void
@@ -9,8 +11,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
   const [healthId, setHealthId] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const [language, setLanguage] = useState('es')
   const [isLoading, setIsLoading] = useState(false)
+  const { t } = useLanguage()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -25,55 +27,12 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
     setIsLoading(false)
   }
 
-  const texts = {
-    es: {
-      title: 'Sistema Nacional de Salud',
-      subtitle: 'Acceso al Portal del Paciente',
-      healthId: 'Número de Tarjeta Sanitaria',
-      password: 'Contraseña',
-      login: 'Iniciar Sesión',
-      forgotPassword: '¿Olvidaste tu contraseña?',
-      loading: 'Iniciando sesión...',
-      demo: 'Demo: Use "12345678A" como paciente o "admin123" como administrador'
-    },
-    en: {
-      title: 'National Health System',
-      subtitle: 'Patient Portal Access',
-      healthId: 'Health Card Number',
-      password: 'Password',
-      login: 'Log In',
-      forgotPassword: 'Forgot your password?',
-      loading: 'Logging in...',
-      demo: 'Demo: Use "12345678A" as patient or "admin123" as administrator'
-    }
-  }
-
-  const t = texts[language as keyof typeof texts]
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-blue-100 px-4">
       <div className="max-w-md w-full">
         {/* Language Selector */}
         <div className="flex justify-end mb-6">
-          <div className="flex items-center bg-white rounded-lg shadow-sm p-1">
-            <Globe className="w-4 h-4 text-gray-500 mr-2 ml-2" />
-            <button
-              onClick={() => setLanguage('es')}
-              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
-                language === 'es' ? 'bg-primary-500 text-white' : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              ES
-            </button>
-            <button
-              onClick={() => setLanguage('en')}
-              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
-                language === 'en' ? 'bg-primary-500 text-white' : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              EN
-            </button>
-          </div>
+          <LanguageSelector />
         </div>
 
         {/* Login Card */}
@@ -82,14 +41,14 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
             <div className="w-16 h-16 bg-primary-500 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-white font-bold text-2xl">SNS</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">{t.title}</h1>
-            <p className="text-gray-600">{t.subtitle}</p>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('login.title')}</h1>
+            <p className="text-gray-600">{t('login.subtitle')}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="healthId" className="block text-sm font-medium text-gray-700 mb-2">
-                {t.healthId}
+                {t('login.healthId')}
               </label>
               <input
                 type="text"
@@ -105,7 +64,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
 
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                {t.password}
+                {t('login.password')}
               </label>
               <div className="relative">
                 <input
@@ -137,7 +96,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
               disabled={isLoading}
               className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? t.loading : t.login}
+              {isLoading ? t('login.loggingIn') : t('common.login')}
             </button>
 
             <div className="text-center">
@@ -145,13 +104,17 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
                 type="button"
                 className="text-primary-600 hover:text-primary-700 text-sm font-medium"
               >
-                {t.forgotPassword}
+                {t('login.forgotPassword')}
               </button>
             </div>
           </form>
 
           <div className="mt-6 p-3 bg-blue-50 rounded-lg">
-            <p className="text-xs text-blue-700">{t.demo}</p>
+            <p className="text-xs text-blue-700">{t('login.demo')}</p>
+          </div>
+
+          <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+            <p className="text-xs text-gray-600">{t('login.gdpr')}</p>
           </div>
         </div>
       </div>

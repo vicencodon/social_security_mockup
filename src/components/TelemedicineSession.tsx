@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Video, FileText, Clock, User, Phone, MessageSquare, Camera, Mic } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
 
 interface TelemedicineSessionProps {
   onNavigate: (view: string) => void
@@ -14,11 +15,12 @@ const TelemedicineSession: React.FC<TelemedicineSessionProps> = ({ onNavigate })
     allergies: '',
     additionalInfo: ''
   })
+  const { t } = useLanguage()
 
   const upcomingSession = {
     id: 1,
     doctor: 'Dr. García López',
-    specialty: 'Medicina General',
+    specialty: t('booking.specialties.general'),
     date: '2025-01-15',
     time: '10:30',
     duration: '30 min',
@@ -49,11 +51,11 @@ const TelemedicineSession: React.FC<TelemedicineSessionProps> = ({ onNavigate })
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setShowPreVisitForm(false)
-    alert('Formulario enviado correctamente. El doctor revisará la información antes de la consulta.')
+    alert(t('telemedicine.formSubmitted'))
   }
 
   const handleJoinCall = () => {
-    alert('Conectando a la videollamada... En una aplicación real, esto abriría la plataforma de videoconferencia.')
+    alert(t('telemedicine.connectingCall'))
   }
 
   if (showPreVisitForm) {
@@ -61,29 +63,29 @@ const TelemedicineSession: React.FC<TelemedicineSessionProps> = ({ onNavigate })
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="card max-w-2xl mx-auto">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Formulario Pre-Consulta</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('telemedicine.preVisitFormTitle')}</h2>
             <p className="text-gray-600">
-              Complete la siguiente información para ayudar al doctor a preparar su consulta
+              {t('telemedicine.preVisitFormDesc')}
             </p>
           </div>
 
           <form onSubmit={handleFormSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Síntomas principales
+                {t('telemedicine.mainSymptoms')}
               </label>
               <textarea
                 value={formData.symptoms}
                 onChange={(e) => setFormData({...formData, symptoms: e.target.value})}
                 className="input-field h-24 resize-none"
-                placeholder="Describa sus síntomas principales..."
+                placeholder={t('telemedicine.symptomsPlaceholder')}
                 required
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Duración de los síntomas
+                {t('telemedicine.symptomsDuration')}
               </label>
               <select
                 value={formData.duration}
@@ -91,7 +93,7 @@ const TelemedicineSession: React.FC<TelemedicineSessionProps> = ({ onNavigate })
                 className="input-field"
                 required
               >
-                <option value="">Seleccionar duración</option>
+                <option value="">{t('telemedicine.selectDuration')}</option>
                 <option value="1-2 días">1-2 días</option>
                 <option value="3-7 días">3-7 días</option>
                 <option value="1-2 semanas">1-2 semanas</option>
@@ -101,38 +103,38 @@ const TelemedicineSession: React.FC<TelemedicineSessionProps> = ({ onNavigate })
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Medicamentos actuales
+                {t('telemedicine.currentMedications')}
               </label>
               <textarea
                 value={formData.medications}
                 onChange={(e) => setFormData({...formData, medications: e.target.value})}
                 className="input-field h-20 resize-none"
-                placeholder="Liste los medicamentos que está tomando actualmente..."
+                placeholder={t('telemedicine.medicationsPlaceholder')}
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Alergias conocidas
+                {t('telemedicine.knownAllergies')}
               </label>
               <input
                 type="text"
                 value={formData.allergies}
                 onChange={(e) => setFormData({...formData, allergies: e.target.value})}
                 className="input-field"
-                placeholder="Medicamentos, alimentos, etc."
+                placeholder={t('telemedicine.allergiesPlaceholder')}
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Información adicional
+                {t('telemedicine.additionalInfo')}
               </label>
               <textarea
                 value={formData.additionalInfo}
                 onChange={(e) => setFormData({...formData, additionalInfo: e.target.value})}
                 className="input-field h-20 resize-none"
-                placeholder="Cualquier otra información relevante..."
+                placeholder={t('telemedicine.additionalInfoPlaceholder')}
               />
             </div>
 
@@ -142,13 +144,13 @@ const TelemedicineSession: React.FC<TelemedicineSessionProps> = ({ onNavigate })
                 onClick={() => setShowPreVisitForm(false)}
                 className="btn-secondary flex-1"
               >
-                Cancelar
+                {t('common.cancel')}
               </button>
               <button
                 type="submit"
                 className="btn-primary flex-1"
               >
-                Enviar Formulario
+                {t('common.save')}
               </button>
             </div>
           </form>
@@ -160,8 +162,8 @@ const TelemedicineSession: React.FC<TelemedicineSessionProps> = ({ onNavigate })
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Teleconsulta</h1>
-        <p className="text-gray-600">Consulta médica virtual programada</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('telemedicine.title')}</h1>
+        <p className="text-gray-600">{t('telemedicine.subtitle')}</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -169,9 +171,9 @@ const TelemedicineSession: React.FC<TelemedicineSessionProps> = ({ onNavigate })
         <div className="lg:col-span-2">
           <div className="card mb-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-gray-900">Próxima Consulta Virtual</h2>
+              <h2 className="text-xl font-semibold text-gray-900">{t('telemedicine.nextConsultation')}</h2>
               <span className="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
-                Confirmada
+                {t('telemedicine.confirmed')}
               </span>
             </div>
 
@@ -190,7 +192,7 @@ const TelemedicineSession: React.FC<TelemedicineSessionProps> = ({ onNavigate })
                   <p className="font-semibold text-gray-900">
                     {upcomingSession.date} - {upcomingSession.time}
                   </p>
-                  <p className="text-sm text-gray-600">Duración: {upcomingSession.duration}</p>
+                  <p className="text-sm text-gray-600">{t('telemedicine.duration')}: {upcomingSession.duration}</p>
                 </div>
               </div>
             </div>
@@ -202,7 +204,7 @@ const TelemedicineSession: React.FC<TelemedicineSessionProps> = ({ onNavigate })
                 className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center"
               >
                 <Video className="w-6 h-6 mr-3" />
-                Unirse a la Videollamada
+                {t('telemedicine.joinVideoCall')}
               </button>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -211,35 +213,35 @@ const TelemedicineSession: React.FC<TelemedicineSessionProps> = ({ onNavigate })
                   className="btn-secondary flex items-center justify-center"
                 >
                   <FileText className="w-5 h-5 mr-2" />
-                  Formulario Pre-Consulta
+                  {t('telemedicine.preVisitForm')}
                 </button>
 
                 <button className="btn-secondary flex items-center justify-center">
                   <Phone className="w-5 h-5 mr-2" />
-                  Llamada de Audio
+                  {t('telemedicine.audioCall')}
                 </button>
               </div>
             </div>
 
             {/* Technical Requirements */}
             <div className="mt-8 p-4 bg-blue-50 rounded-lg">
-              <h3 className="font-medium text-blue-900 mb-2">Requisitos Técnicos</h3>
+              <h3 className="font-medium text-blue-900 mb-2">{t('telemedicine.technicalRequirements')}</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-blue-800">
                 <div className="flex items-center">
                   <Camera className="w-4 h-4 mr-2" />
-                  <span>Cámara web funcional</span>
+                  <span>{t('telemedicine.workingCamera')}</span>
                 </div>
                 <div className="flex items-center">
                   <Mic className="w-4 h-4 mr-2" />
-                  <span>Micrófono activo</span>
+                  <span>{t('telemedicine.activeMicrophone')}</span>
                 </div>
                 <div className="flex items-center">
                   <MessageSquare className="w-4 h-4 mr-2" />
-                  <span>Conexión estable a internet</span>
+                  <span>{t('telemedicine.stableConnection')}</span>
                 </div>
                 <div className="flex items-center">
                   <Video className="w-4 h-4 mr-2" />
-                  <span>Navegador actualizado</span>
+                  <span>{t('telemedicine.updatedBrowser')}</span>
                 </div>
               </div>
             </div>
@@ -247,23 +249,23 @@ const TelemedicineSession: React.FC<TelemedicineSessionProps> = ({ onNavigate })
 
           {/* Session Instructions */}
           <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Instrucciones para la Consulta</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('telemedicine.instructions')}</h3>
             <div className="space-y-3 text-sm text-gray-600">
               <div className="flex items-start">
                 <span className="flex-shrink-0 w-6 h-6 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center text-xs font-medium mr-3 mt-0.5">1</span>
-                <p>Únase a la videollamada 5 minutos antes de la hora programada</p>
+                <p>{t('telemedicine.joinEarly')}</p>
               </div>
               <div className="flex items-start">
                 <span className="flex-shrink-0 w-6 h-6 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center text-xs font-medium mr-3 mt-0.5">2</span>
-                <p>Asegúrese de estar en un lugar tranquilo y bien iluminado</p>
+                <p>{t('telemedicine.quietPlace')}</p>
               </div>
               <div className="flex items-start">
                 <span className="flex-shrink-0 w-6 h-6 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center text-xs font-medium mr-3 mt-0.5">3</span>
-                <p>Tenga a mano su tarjeta sanitaria y lista de medicamentos</p>
+                <p>{t('telemedicine.documents')}</p>
               </div>
               <div className="flex items-start">
                 <span className="flex-shrink-0 w-6 h-6 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center text-xs font-medium mr-3 mt-0.5">4</span>
-                <p>Complete el formulario pre-consulta si es necesario</p>
+                <p>{t('telemedicine.completeForm')}</p>
               </div>
             </div>
           </div>
@@ -272,7 +274,7 @@ const TelemedicineSession: React.FC<TelemedicineSessionProps> = ({ onNavigate })
         {/* Medical Records */}
         <div>
           <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Historial Médico Reciente</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('telemedicine.recentHistory')}</h3>
             <div className="space-y-4">
               {recentRecords.map((record) => (
                 <div key={record.id} className="border border-gray-200 rounded-lg p-3">
@@ -293,24 +295,24 @@ const TelemedicineSession: React.FC<TelemedicineSessionProps> = ({ onNavigate })
               onClick={() => onNavigate('history')}
               className="w-full mt-4 text-primary-600 hover:text-primary-700 text-sm font-medium"
             >
-              Ver historial completo
+              {t('telemedicine.viewFullHistory')}
             </button>
           </div>
 
           {/* Contact Information */}
           <div className="card mt-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Información de Contacto</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('telemedicine.contactInfo')}</h3>
             <div className="space-y-3 text-sm">
               <div>
-                <p className="font-medium text-gray-900">Soporte Técnico</p>
+                <p className="font-medium text-gray-900">{t('telemedicine.technicalSupport')}</p>
                 <p className="text-gray-600">900 123 456</p>
               </div>
               <div>
-                <p className="font-medium text-gray-900">Emergencias</p>
+                <p className="font-medium text-gray-900">{t('telemedicine.emergencies')}</p>
                 <p className="text-gray-600">112</p>
               </div>
               <div>
-                <p className="font-medium text-gray-900">ID de Sesión</p>
+                <p className="font-medium text-gray-900">{t('telemedicine.sessionId')}</p>
                 <p className="text-gray-600 font-mono">{upcomingSession.sessionId}</p>
               </div>
             </div>
