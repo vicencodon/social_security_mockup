@@ -1,5 +1,5 @@
 import React from 'react'
-import { Calendar, Video, FileText, Bell, Clock, MapPin, User, Plus, ArrowRight } from 'lucide-react'
+import { Calendar, Video, FileText, Bell, Clock, MapPin, User, Plus, TrendingUp, Activity, Heart } from 'lucide-react'
 import { useLanguage } from '../contexts/LanguageContext'
 
 interface PatientDashboardProps {
@@ -43,6 +43,30 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
     }
   ]
 
+  const healthStats = [
+    {
+      label: t('dashboard.nextAppointment'),
+      value: 'Mañana 10:30',
+      icon: Calendar,
+      color: 'text-blue-600',
+      bgColor: 'bg-blue-50'
+    },
+    {
+      label: t('dashboard.pendingResults'),
+      value: '2',
+      icon: FileText,
+      color: 'text-green-600',
+      bgColor: 'bg-green-50'
+    },
+    {
+      label: t('dashboard.lastVisit'),
+      value: '5 días',
+      icon: Activity,
+      color: 'text-purple-600',
+      bgColor: 'bg-purple-50'
+    }
+  ]
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-20 md:pb-8">
       {/* Welcome Section */}
@@ -55,75 +79,24 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
         </p>
       </div>
 
-      {/* Quick Actions - Mobile Optimized Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
-        <button
-          onClick={() => onNavigate('booking')}
-          className="card hover:shadow-lg transition-all duration-200 text-left group p-4 sm:p-6 relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 w-16 h-16 bg-primary-50 rounded-full -translate-y-8 translate-x-8 group-hover:scale-150 transition-transform duration-300"></div>
-          <div className="relative">
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center group-hover:bg-primary-200 transition-colors">
-                <Calendar className="w-6 h-6 text-primary-600" />
+      {/* Health Overview Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
+        {healthStats.map((stat, index) => {
+          const Icon = stat.icon
+          return (
+            <div key={index} className="card">
+              <div className="flex items-center">
+                <div className={`w-12 h-12 ${stat.bgColor} rounded-xl flex items-center justify-center mr-4`}>
+                  <Icon className={`w-6 h-6 ${stat.color}`} />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-600">{stat.label}</p>
+                  <p className="text-xl font-bold text-gray-900">{stat.value}</p>
+                </div>
               </div>
-              <ArrowRight className="w-4 h-4 text-gray-400 ml-auto group-hover:text-primary-500 transition-colors" />
             </div>
-            <h3 className="font-semibold text-gray-900 mb-1 text-base sm:text-lg">{t('dashboard.bookAppointment')}</h3>
-            <p className="text-sm text-gray-600">{t('dashboard.bookAppointmentDesc')}</p>
-          </div>
-        </button>
-
-        <button
-          onClick={() => onNavigate('appointments')}
-          className="card hover:shadow-lg transition-all duration-200 text-left group p-4 sm:p-6 relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 w-16 h-16 bg-green-50 rounded-full -translate-y-8 translate-x-8 group-hover:scale-150 transition-transform duration-300"></div>
-          <div className="relative">
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center group-hover:bg-green-200 transition-colors">
-                <Clock className="w-6 h-6 text-green-600" />
-              </div>
-              <ArrowRight className="w-4 h-4 text-gray-400 ml-auto group-hover:text-green-500 transition-colors" />
-            </div>
-            <h3 className="font-semibold text-gray-900 mb-1 text-base sm:text-lg">{t('dashboard.myAppointments')}</h3>
-            <p className="text-sm text-gray-600">{t('dashboard.myAppointmentsDesc')}</p>
-          </div>
-        </button>
-
-        <button
-          onClick={() => onNavigate('telemedicine')}
-          className="card hover:shadow-lg transition-all duration-200 text-left group p-4 sm:p-6 relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 w-16 h-16 bg-purple-50 rounded-full -translate-y-8 translate-x-8 group-hover:scale-150 transition-transform duration-300"></div>
-          <div className="relative">
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center group-hover:bg-purple-200 transition-colors">
-                <Video className="w-6 h-6 text-purple-600" />
-              </div>
-              <ArrowRight className="w-4 h-4 text-gray-400 ml-auto group-hover:text-purple-500 transition-colors" />
-            </div>
-            <h3 className="font-semibold text-gray-900 mb-1 text-base sm:text-lg">{t('dashboard.telemedicine')}</h3>
-            <p className="text-sm text-gray-600">{t('dashboard.telemedicineDesc')}</p>
-          </div>
-        </button>
-
-        <button
-          onClick={() => onNavigate('history')}
-          className="card hover:shadow-lg transition-all duration-200 text-left group p-4 sm:p-6 relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 w-16 h-16 bg-orange-50 rounded-full -translate-y-8 translate-x-8 group-hover:scale-150 transition-transform duration-300"></div>
-          <div className="relative">
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center group-hover:bg-orange-200 transition-colors">
-                <FileText className="w-6 h-6 text-orange-600" />
-              </div>
-              <ArrowRight className="w-4 h-4 text-gray-400 ml-auto group-hover:text-orange-500 transition-colors" />
-            </div>
-            <h3 className="font-semibold text-gray-900 mb-1 text-base sm:text-lg">{t('dashboard.medicalHistory')}</h3>
-            <p className="text-sm text-gray-600">{t('dashboard.medicalHistoryDesc')}</p>
-          </div>
-        </button>
+          )
+        })}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -133,10 +106,11 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg sm:text-xl font-semibold text-gray-900">{t('dashboard.upcomingAppointments')}</h2>
               <button
-                onClick={() => onNavigate('appointments')}
-                className="text-primary-600 hover:text-primary-700 text-sm font-medium min-h-[44px] px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                onClick={() => onNavigate('booking')}
+                className="btn-primary text-sm px-4 py-2 flex items-center"
               >
-                {t('dashboard.viewAll')}
+                <Plus className="w-4 h-4 mr-2" />
+                {t('dashboard.bookNew')}
               </button>
             </div>
             
@@ -161,7 +135,7 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 ml-4">
+                    <div className="flex flex-col space-y-2 ml-4">
                       <button className="btn-secondary text-xs px-3 py-2">{t('dashboard.modify')}</button>
                       <button className="text-red-600 hover:text-red-700 text-xs font-medium px-3 py-2 rounded min-h-[36px]">{t('common.cancel')}</button>
                     </div>
@@ -170,21 +144,29 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
               ))}
             </div>
 
-            {/* Quick Book Button - Sticky on Mobile */}
-            <div className="mt-6">
-              <button
-                onClick={() => onNavigate('booking')}
-                className="w-full sm:w-auto btn-primary flex items-center justify-center"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                {t('dashboard.bookAppointment')}
-              </button>
-            </div>
+            {upcomingAppointments.length === 0 && (
+              <div className="text-center py-8">
+                <Calendar className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  {t('dashboard.noAppointments')}
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  {t('dashboard.scheduleFirst')}
+                </p>
+                <button
+                  onClick={() => onNavigate('booking')}
+                  className="btn-primary"
+                >
+                  {t('dashboard.bookAppointment')}
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Notifications */}
-        <div>
+        {/* Notifications & Quick Actions */}
+        <div className="space-y-6">
+          {/* Notifications */}
           <div className="card">
             <div className="flex items-center mb-6">
               <Bell className="w-5 h-5 text-gray-500 mr-2" />
@@ -203,6 +185,34 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ onNavigate }) => {
             <button className="w-full mt-4 text-primary-600 hover:text-primary-700 text-sm font-medium min-h-[44px] px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
               {t('dashboard.viewAllNotifications')}
             </button>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="card">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('dashboard.quickActions')}</h3>
+            <div className="space-y-3">
+              <button
+                onClick={() => onNavigate('telemedicine')}
+                className="w-full flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-left"
+              >
+                <Video className="w-5 h-5 text-purple-600 mr-3" />
+                <div>
+                  <p className="font-medium text-gray-900 text-sm">{t('dashboard.telemedicine')}</p>
+                  <p className="text-xs text-gray-600">{t('dashboard.virtualConsultation')}</p>
+                </div>
+              </button>
+              
+              <button
+                onClick={() => onNavigate('records')}
+                className="w-full flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-left"
+              >
+                <FileText className="w-5 h-5 text-orange-600 mr-3" />
+                <div>
+                  <p className="font-medium text-gray-900 text-sm">{t('dashboard.medicalHistory')}</p>
+                  <p className="text-xs text-gray-600">{t('dashboard.viewRecords')}</p>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       </div>

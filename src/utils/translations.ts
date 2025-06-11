@@ -18,6 +18,15 @@ export const translations = {
       yes: 'Sí',
       no: 'No'
     },
+    nav: {
+      home: 'Inicio',
+      appointments: 'Citas',
+      telemedicine: 'Teleconsulta',
+      records: 'Historial',
+      profile: 'Perfil',
+      dashboard: 'Panel',
+      reports: 'Informes'
+    },
     login: {
       title: 'Sistema Nacional de Salud',
       subtitle: 'Acceso al Portal del Paciente',
@@ -32,20 +41,25 @@ export const translations = {
       welcome: 'Bienvenido',
       healthCard: 'Tarjeta Sanitaria',
       bookAppointment: 'Pedir Cita',
-      bookAppointmentDesc: 'Reservar nueva cita',
+      bookNew: 'Nueva Cita',
       myAppointments: 'Mis Citas',
-      myAppointmentsDesc: 'Ver citas programadas',
       telemedicine: 'Teleconsulta',
-      telemedicineDesc: 'Consulta virtual',
       medicalHistory: 'Historial Médico',
-      medicalHistoryDesc: 'Ver historial completo',
       upcomingAppointments: 'Próximas Citas',
       viewAll: 'Ver todas',
       notifications: 'Notificaciones',
       viewAllNotifications: 'Ver todas las notificaciones',
       modify: 'Modificar',
       reminderAppointment: 'Recordatorio: Cita con {doctor} mañana a las {time}',
-      resultsAvailable: 'Resultados de análisis disponibles'
+      resultsAvailable: 'Resultados de análisis disponibles',
+      nextAppointment: 'Próxima Cita',
+      pendingResults: 'Resultados Pendientes',
+      lastVisit: 'Última Visita',
+      noAppointments: 'No tienes citas programadas',
+      scheduleFirst: 'Programa tu primera cita médica',
+      quickActions: 'Acciones Rápidas',
+      virtualConsultation: 'Consulta virtual',
+      viewRecords: 'Ver historial completo'
     },
     booking: {
       title: 'Reservar Cita',
@@ -68,6 +82,8 @@ export const translations = {
       appointmentTime: 'Hora de la cita',
       appointmentLocation: 'Ubicación',
       appointmentBooked: 'Cita reservada con éxito. Recibirá confirmación por SMS y email.',
+      bookNew: 'Reservar Nueva',
+      myAppointments: 'Mis Citas',
       specialties: {
         general: 'Medicina General',
         cardiology: 'Cardiología',
@@ -184,6 +200,15 @@ export const translations = {
       yes: 'Yes',
       no: 'No'
     },
+    nav: {
+      home: 'Home',
+      appointments: 'Appointments',
+      telemedicine: 'Telemedicine',
+      records: 'Records',
+      profile: 'Profile',
+      dashboard: 'Dashboard',
+      reports: 'Reports'
+    },
     login: {
       title: 'National Health System',
       subtitle: 'Patient Portal Access',
@@ -198,20 +223,25 @@ export const translations = {
       welcome: 'Welcome',
       healthCard: 'Health Card',
       bookAppointment: 'Book Appointment',
-      bookAppointmentDesc: 'Schedule new appointment',
+      bookNew: 'Book New',
       myAppointments: 'My Appointments',
-      myAppointmentsDesc: 'View scheduled appointments',
       telemedicine: 'Telemedicine',
-      telemedicineDesc: 'Virtual consultation',
       medicalHistory: 'Medical History',
-      medicalHistoryDesc: 'View complete history',
       upcomingAppointments: 'Upcoming Appointments',
       viewAll: 'View all',
       notifications: 'Notifications',
       viewAllNotifications: 'View all notifications',
       modify: 'Modify',
       reminderAppointment: 'Reminder: Appointment with {doctor} tomorrow at {time}',
-      resultsAvailable: 'Test results available'
+      resultsAvailable: 'Test results available',
+      nextAppointment: 'Next Appointment',
+      pendingResults: 'Pending Results',
+      lastVisit: 'Last Visit',
+      noAppointments: 'No scheduled appointments',
+      scheduleFirst: 'Schedule your first medical appointment',
+      quickActions: 'Quick Actions',
+      virtualConsultation: 'Virtual consultation',
+      viewRecords: 'View complete history'
     },
     booking: {
       title: 'Book Appointment',
@@ -234,6 +264,8 @@ export const translations = {
       appointmentTime: 'Appointment time',
       appointmentLocation: 'Location',
       appointmentBooked: 'Appointment booked successfully. You will receive confirmation via SMS and email.',
+      bookNew: 'Book New',
+      myAppointments: 'My Appointments',
       specialties: {
         general: 'General Medicine',
         cardiology: 'Cardiology',
@@ -350,6 +382,15 @@ export const translations = {
       yes: 'Tak',
       no: 'Nie'
     },
+    nav: {
+      home: 'Główna',
+      appointments: 'Wizyty',
+      telemedicine: 'Telemedycyna',
+      records: 'Historia',
+      profile: 'Profil',
+      dashboard: 'Panel',
+      reports: 'Raporty'
+    },
     login: {
       title: 'Narodowy System Zdrowia',
       subtitle: 'Dostęp do Portalu Pacjenta',
@@ -364,20 +405,25 @@ export const translations = {
       welcome: 'Witamy',
       healthCard: 'Karta Zdrowia',
       bookAppointment: 'Umów Wizytę',
-      bookAppointmentDesc: 'Zarezerwuj nową wizytę',
+      bookNew: 'Nowa Wizyta',
       myAppointments: 'Moje Wizyty',
-      myAppointmentsDesc: 'Zobacz zaplanowane wizyty',
       telemedicine: 'Telemedycyna',
-      telemedicineDesc: 'Konsultacja wirtualna',
       medicalHistory: 'Historia Medyczna',
-      medicalHistoryDesc: 'Zobacz pełną historię',
       upcomingAppointments: 'Nadchodzące Wizyty',
       viewAll: 'Zobacz wszystkie',
       notifications: 'Powiadomienia',
       viewAllNotifications: 'Zobacz wszystkie powiadomienia',
       modify: 'Modyfikuj',
       reminderAppointment: 'Przypomnienie: Wizyta z {doctor} jutro o {time}',
-      resultsAvailable: 'Wyniki badań dostępne'
+      resultsAvailable: 'Wyniki badań dostępne',
+      nextAppointment: 'Następna Wizyta',
+      pendingResults: 'Oczekujące Wyniki',
+      lastVisit: 'Ostatnia Wizyta',
+      noAppointments: 'Brak zaplanowanych wizyt',
+      scheduleFirst: 'Zaplanuj swoją pierwszą wizytę lekarską',
+      quickActions: 'Szybkie Akcje',
+      virtualConsultation: 'Konsultacja wirtualna',
+      viewRecords: 'Zobacz pełną historię'
     },
     booking: {
       title: 'Umów Wizytę',
@@ -400,6 +446,8 @@ export const translations = {
       appointmentTime: 'Godzina wizyty',
       appointmentLocation: 'Lokalizacja',
       appointmentBooked: 'Wizyta została pomyślnie zarezerwowana. Otrzymasz potwierdzenie SMS i e-mail.',
+      bookNew: 'Zarezerwuj Nową',
+      myAppointments: 'Moje Wizyty',
       specialties: {
         general: 'Medycyna Ogólna',
         cardiology: 'Kardiologia',
